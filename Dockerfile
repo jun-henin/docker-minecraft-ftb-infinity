@@ -1,10 +1,10 @@
 FROM java:8
 
-ENV FTB_INFINITY_URL https://api.modpacks.ch/public/modpack/23/99/server/linux
+ENV FTB_INFINITY_URL https://www.feed-the-beast.com/projects/ftb-infinity-evolved/files/2320899/download
 ENV LAUNCHWRAPPER net/minecraft/launchwrapper/1.12/launchwrapper-1.12.jar
 
-RUN curl -SL $FTB_INFINITY_URL -o /tmp/serverinstall && \
-    /tmp/serverinstall -d /opt/minecraft && \
+RUN curl -SL $FTB_INFINITY_URL -o /tmp/infinity.zip && \
+    unzip /tmp/infinity.zip -d /opt/minecraft && \
     mkdir -p /opt/minecraft/$(dirname libraries/${LAUNCHWRAPPER}) && \
     curl -S https://libraries.minecraft.net/$LAUNCHWRAPPER -o /opt/minecraft/libraries/$LAUNCHWRAPPER && \
     curl -SL https://minecraft.curseforge.com/projects/dynmapforge/files/2307078/download -o /opt/minecraft/mods/Dynmap-2.3-forge-1.7.10.jar && \
@@ -19,7 +19,7 @@ ENV MINECRAFT_STARTUP_JAR FTBServer-1.7.10-1614.jar
 
 VOLUME /opt/minecraft/world
 
-EXPOSE 25566
+EXPOSE 25565
 EXPOSE 8123
 
 CMD bash /opt/minecraft/ServerStart.sh
